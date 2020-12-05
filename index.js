@@ -140,7 +140,7 @@ app.get("/login", async function (req, res) {
     var viewData = {}
     res.render("login", viewData)
 })
-app.get("/api/login", async function (req, res) {
+app.post("/api/login", async function (req, res) {
     // login api call
     if (req.session.authenticated && req.session.username == req.body.username) {
         // already logged in
@@ -206,7 +206,7 @@ app.get("/api/login", async function (req, res) {
         }
     )
 })
-app.get("/api/logout", isAuthenticatedJson, async function (req, res) {
+app.post("/api/logout", isAuthenticatedJson, async function (req, res) {
     req.session.authenticated = false
     delete req.session.username
     delete req.session.userId
