@@ -21,6 +21,24 @@ app.use(session({
     saveUninitialized: true
 }))
 
+// middleware function
+function isAuthenticatedJson(req, res, next) {
+    if (!req.session.authenticated) {
+        req.redirect("/")
+    }
+    next()
+}
+
+function isAuthenticatedJson(req, res, next) {
+    if (!req.session.authenticated) {
+        return req.status(400).json({
+            success: false,
+            message: "You must be authenticated to perform this action."
+        })
+    }
+    next()
+}
+
 
 // routes
 app.get("/", async function (req, res) {
@@ -93,14 +111,8 @@ app.get("/api/ebook/:ebook_id", async function (req, res) {
         }
     )
 })
-app.post("/api/ebook/:ebook_id/checkout", async function (req, res) {
+app.post("/api/ebook/:ebook_id/checkout", isAuthenticatedJson, async function (req, res) {
     // user checks out a book -- requires authentication
-    if (!req.session.authenticated) {
-        return res.status(400).json({
-            success: false,
-            message: "You must be logged in to perform this action."
-        })
-    }
     connection.query(
         "INSERT INTO borrow (user_id, ebook_id, due) VALUES (?, ?, NOW() + INTERVAL 21 DAY)",
         [req.session.userId, req.query.ebook_id],
@@ -194,15 +206,7 @@ app.get("/api/login", async function (req, res) {
         }
     )
 })
-app.get("/api/logout", async function (req, res) {
-    // logout api call
-    if (!req.session.authenticated) {
-        return res.status(400).json({
-            success: false,
-            message: "You must be logged in to perform this action."
-        })
-    }
-
+app.get("/api/logout", isAuthenticatedJson, async function (req, res) {
     req.session.authenticated = false
     delete req.session.username
     delete req.session.userId
@@ -227,14 +231,8 @@ app.get("/user/ebook/:borrow_id", async function (req, res) {
     var viewData = {}
     res.render("user-ebook-show", viewData)
 })
-app.get("/api/user/ebook", async function (req, res) {
+app.get("/api/user/ebook", isAuthenticatedJson, async function (req, res) {
     // list of user borrowed ebooks -- requires authentication
-    if (!req.session.authenticated) {
-        return res.status(400).json({
-            success: false,
-            message: "You must be logged in to perform this action."
-        })
-    }
     connection.query(
         `SELECT e.*, b.id AS borrow_id
         FROM borrow b
@@ -260,14 +258,8 @@ app.get("/api/user/ebook", async function (req, res) {
         }
     )
 })
-app.post("/api/user/ebook/:borrow_id/return", async function (req, res) {
+app.post("/api/user/ebook/:borrow_id/return", isAuthenticatedJson, async function (req, res) {
     // return user borrowed ebook -- requires authentication
-    if (!req.session.authenticated) {
-        return res.status(400).json({
-            success: false,
-            message: "You must be logged in to perform this action."
-        })
-    }
     connection.query(
         "DELETE FROM borrow WHERE user_id=? AND id=?",
         [req.session.userId, req.query.borrow_id],
