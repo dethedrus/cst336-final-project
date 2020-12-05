@@ -30,6 +30,8 @@ services:
     depends_on:
       - db
     env_file: ./.env
+    volumes:
+      - ./migrations:/usr/app/migrations
 
 
 # Names our volume
