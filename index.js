@@ -40,11 +40,58 @@ app.get("/ebook/:ebook_id", async function (req, res) {
 })
 app.get("/api/ebook", async function (req, res) {
     // return a list of ebooks available
-    res.send()
+    connection.query(
+        "SELECT * FROM ebook",
+        function (error, rows, fields) {
+            if (error) {
+                return res.status(500).json({
+                    success: false,
+                    message: "Unexpected server error.",
+                    error: error
+                })
+            }
+
+            return res.status(200).json({
+                success: true,
+                message: "Found ebooks.",
+                data: {
+                    ebooks: rows
+                }
+            })
+        }
+    )
 })
 app.get("/api/ebook/:ebook_id", async function (req, res) {
     // return single ebook detail
-    res.send()
+    connection.query(
+        "SELECT * FROM ebook WHERE id=?",
+        [req.query.ebook_id],
+        function (error, rows, fields) {
+            if (error) {
+                return res.status(500).json({
+                    success: false,
+                    message: "Unexpected server error.",
+                    error: error
+                })
+            }
+
+            if (rows.length == 1) {
+                return res.status(200).json({
+                    success: true,
+                    message: "Ebook found.",
+                    data: {
+                        ebook: rows[0]
+                    }
+                })
+            } else {
+                return res.status(404).json({
+                    success: false,
+                    message: "Ebook not found."
+                })
+            }
+
+        }
+    )
 })
 app.get("/api/ebook/:ebook_id/checkout", async function (req, res) {
     // user checks out a book
