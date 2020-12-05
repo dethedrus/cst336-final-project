@@ -9,6 +9,6 @@ module.exports = {
             PRIMARY KEY (id),
             UNIQUE(user_id, ebook_id)
         )
-        `.replace(/(?:\r\n|\r|\n)/g, ' '),
+        `,
     "down": "DROP TABLE borrow"
 }

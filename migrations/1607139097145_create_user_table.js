@@ -8,6 +8,6 @@ module.exports = {
             PRIMARY KEY (id),
             UNIQUE(username)
         )
-    `.replace(/(?:\r\n|\r|\n)/g, ' '),
+    `,
     "down": "DROP TABLE user"
 }

@@ -11,6 +11,6 @@ module.exports = {
             PRIMARY KEY (id),
             UNIQUE (gutenberg_id)
         )
-        `.replace(/(?:\r\n|\r|\n)/g, ' '),
+        `,
     "down": "DROP TABLE ebook"
 }
