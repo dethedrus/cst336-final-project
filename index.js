@@ -1,10 +1,10 @@
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
+const session = require('express-session')
 const app = express()
 const fetch = require("node-fetch")
+const bcrypt = require('bcrypt')
 const connection = require("./dbPool.js")
-
-const formData = require("express-form-data");
 
 const IP = process.env.IP || "0.0.0.0"
 const PORT = process.env.PORT || 5000
@@ -14,7 +14,12 @@ app.set("view engine", "ejs");
 app.use(express.static("public"))
 app.use(expressLayouts)
 
-app.use(formData.parse());
+app.use(express.urlencoded({extended: true}))
+app.use(session({
+    secret: process.env.SECRET || 'top-secret',
+    resave: true,
+    saveUninitialized: true
+}))
 
 
 // routes
@@ -52,11 +57,80 @@ app.get("/login", async function (req, res) {
 })
 app.get("/api/login", async function (req, res) {
     // login api call
-    res.send()
+    if (req.session.authenticated && req.session.username == req.body.username) {
+        // already logged in
+        res.status().json({
+            success: true,
+            message: "Successfully logged in.",
+            data: {
+                username: req.session.username
+            }
+        })
+    } else {
+        // new login, reset
+        req.session.authenticated = false
+        delete req.session.username
+        delete req.session.userId
+    }
+
+    let username = req.body.username
+    let plaintextPassword = req.body.password
+
+    connection.query(
+        "SELECT * FROM user WHERE username=?",
+        [username],
+        function(error, rows, fields) {
+            if (error) {
+                return res.status(500).json({
+                    success: false,
+                    message: "Unexpected server error.",
+                    error: error
+                })
+            }
+
+            if (rows.length != 1) {
+                // user not found
+                res.status(401).json({
+                    success: false,
+                    message: "Username and password combination not valid."
+                })
+            }
+
+            let row = rows[0]
+
+            let validPassword  = await bcrypt.compare(plaintextPassword, row.password_hash)
+
+            if (validPassword) {
+                req.session.authenticated = true
+                req.session.username = row.username
+                req.session.userId = row.id
+    
+                res.status(200).json({
+                    success: true,
+                    message: "Successfully logged in.",
+                    data: {
+                        username: row.username
+                    }
+                })
+            } else {
+                res.status(401).json({
+                    success: false,
+                    message: "Username and password combination not valid."
+                })
+            }
+        }
+    )
 })
 app.get("/api/logout", async function (req, res) {
     // logout api call
-    res.send()
+    req.session.authenticated = false
+    delete req.session.username
+    delete req.session.userId
+
+    res.status(200).json({
+        success: true,
+        message: "Successfully logged out."
+    })
 })
 app.get("/user", async function (req, res) {
     // user management page; 
