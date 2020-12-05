@@ -1,0 +1,34 @@
+{
+  "name": "cst336-final-project",
+  "version": "1.0.0",
+  "description": "Final project for CST336.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "migrate": "node migration.js up",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gazpump/cst336-final-project.git"
+  },
+  "author": "J. Baluyot, J. Herrera Gallegos, D. Szabo, Y. Zauderer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gazpump/cst336-final-project/issues"
+  },
+  "homepage": "https://github.com/gazpump/cst336-final-project#readme",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0",
+    "express-form-data": "^2.0.14",
+    "express-session": "^1.17.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "mysql-migrations": "^1.0.7",
+    "nodemon": "^2.0.6"
+  }
+}
