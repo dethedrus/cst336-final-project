@@ -25,7 +25,8 @@
     "express-ejs-layouts": "^2.5.0",
     "express-form-data": "^2.0.14",
     "express-session": "^1.17.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "mysql-migrations": "^1.0.7",
