@@ -93,9 +93,35 @@ app.get("/api/ebook/:ebook_id", async function (req, res) {
         }
     )
 })
-app.get("/api/ebook/:ebook_id/checkout", async function (req, res) {
-    // user checks out a book
-    res.send()
+app.post("/api/ebook/:ebook_id/checkout", async function (req, res) {
+    // user checks out a book -- requires authentication
+    if (!req.session.authenticated) {
+        return res.status(400).json({
+            success: false,
+            message: "You must be logged in to perform this action."
+        })
+    }
+    connection.query(
+        "INSERT INTO borrow (user_id, ebook_id, due) VALUES (?, ?, NOW() + INTERVAL 21 DAY)",
+        [req.session.userId, req.query.ebook_id],
+        function(error, rows, fields) {
+            if (error) {
+                return res.status(500).json({
+                    success: false,
+                    message: "Unexpected server error.",
+                    error: error
+                })
+            }
+
+            res.status(200).json({
+                success: true,
+                message: "Successfully checked out ebook.",
+                data: {
+                    borrow_id: rows[0].id
+                }
+            })
+        }
+    )
 })
 app.get("/login", async function (req, res) {
     // login page
@@ -170,11 +196,18 @@ app.get("/api/login", async function (req, res) {
 })
 app.get("/api/logout", async function (req, res) {
     // logout api call
+    if (!req.session.authenticated) {
+        return res.status(400).json({
+            success: false,
+            message: "You must be logged in to perform this action."
+        })
+    }
+
     req.session.authenticated = false
     delete req.session.username
     delete req.session.userId
 
-    res.status(200).json({
+    return res.status(200).json({
         success: true,
         message: "Successfully logged out."
     })
@@ -194,9 +227,65 @@ app.get("/user/ebook/:borrow_id", async function (req, res) {
     var viewData = {}
     res.render("user-ebook-show", viewData)
 })
-app.get("/api/user/ebook/:borrow_id/return", async function (req, res) {
-    // user borrowed ebook; display ebook to user in browser
-    res.send()
+app.get("/api/user/ebook", async function (req, res) {
+    // list of user borrowed ebooks -- requires authentication
+    if (!req.session.authenticated) {
+        return res.status(400).json({
+            success: false,
+            message: "You must be logged in to perform this action."
+        })
+    }
+    connection.query(
+        `SELECT e.*, b.id AS borrow_id
+        FROM borrow b
+            INNER JOIN ebook e ON b.ebook_id=e.id
+        WHERE b.user_id = ?`,
+        [req.session.userId],
+        function(error, rows, fields) {
+            if (error) {
+                return res.status(500).json({
+                    success: false,
+                    message: "Unexpected server error.",
+                    error: error
+                })
+            }
+
+            res.status(200).json({
+                success: true,
+                message: "Successfully fetched checked out ebooks.",
+                data: {
+                    ebooks: rows
+                }
+            })
+        }
+    )
+})
+app.post("/api/user/ebook/:borrow_id/return", async function (req, res) {
+    // return user borrowed ebook -- requires authentication
+    if (!req.session.authenticated) {
+        return res.status(400).json({
+            success: false,
+            message: "You must be logged in to perform this action."
+        })
+    }
+    connection.query(
+        "DELETE FROM borrow WHERE user_id=? AND id=?",
+        [req.session.userId, req.query.borrow_id],
+        function(error, rows, fields) {
+            if (error) {
+                return res.status(500).json({
+                    success: false,
+                    message: "Unexpected server error.",
+                    error: error
+                })
+            }
+
+            res.status(200).json({
+                success: true,
+                message: "Successfully returned checked out ebook.",
+            })
+        }
+    )
 })
 
 // starting server
