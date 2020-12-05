@@ -153,9 +153,7 @@ app.post("/api/login", async function (req, res) {
         })
     } else {
         // new login, reset
-        req.session.authenticated = false
-        delete req.session.username
-        delete req.session.userId
+        req.session.destroy()
     }
 
     let username = req.body.username
@@ -207,9 +205,7 @@ app.post("/api/login", async function (req, res) {
     )
 })
 app.post("/api/logout", isAuthenticatedJson, async function (req, res) {
-    req.session.authenticated = false
-    delete req.session.username
-    delete req.session.userId
+    req.session.destroy()
 
     return res.status(200).json({
         success: true,
