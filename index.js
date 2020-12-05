@@ -181,7 +181,7 @@ app.post("/api/login", async function (req, res) {
 
             let row = rows[0]
 
-            let validPassword  = await bcrypt.compare(plaintextPassword, row.password_hash)
+            let validPassword  = await bcrypt.compare(plaintextPassword, row.password)
 
             if (validPassword) {
                 req.session.authenticated = true
