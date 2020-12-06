@@ -22,7 +22,7 @@ app.use(session({
 }))
 
 // middleware function
-function isAuthenticatedJson(req, res, next) {
+function isAuthenticated(req, res, next) {
     if (!req.session.authenticated) {
         req.redirect("/")
     }
@@ -144,7 +144,7 @@ app.post("/api/login", async function (req, res) {
     // login api call
     if (req.session.authenticated && req.session.username == req.body.username) {
         // already logged in
-        res.status().json({
+        return res.status().json({
             success: true,
             message: "Successfully logged in.",
             data: {
@@ -153,7 +153,9 @@ app.post("/api/login", async function (req, res) {
         })
     } else {
         // new login, reset
-        req.session.destroy()
+        req.session.authenticated = false
+        delete req.session.username
+        delete req.session.userId
     }
 
     let username = req.body.username
@@ -173,7 +175,7 @@ app.post("/api/login", async function (req, res) {
 
             if (rows.length != 1) {
                 // user not found
-                res.status(401).json({
+                return res.status(401).json({
                     success: false,
                     message: "Username and password combination not valid."
                 })
@@ -188,7 +190,7 @@ app.post("/api/login", async function (req, res) {
                 req.session.username = row.username
                 req.session.userId = row.id
     
-                res.status(200).json({
+                return res.status(200).json({
                     success: true,
                     message: "Successfully logged in.",
                     data: {
@@ -196,7 +198,7 @@ app.post("/api/login", async function (req, res) {
                     }
                 })
             } else {
-                res.status(401).json({
+                return res.status(401).json({
                     success: false,
                     message: "Username and password combination not valid."
                 })
