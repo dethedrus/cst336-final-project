@@ -31,7 +31,7 @@ function isAuthenticated(req, res, next) {
 
 function isAuthenticatedJson(req, res, next) {
     if (!req.session.authenticated) {
-        return req.status(400).json({
+        return res.status(400).json({
             success: false,
             message: "You must be authenticated to perform this action."
         })
