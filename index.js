@@ -83,7 +83,7 @@ app.get("/api/ebook/:ebook_id", async function (req, res) {
     // return single ebook detail
     connection.query(
         "SELECT * FROM ebook WHERE id=?",
-        [req.query.ebook_id],
+        [req.params.ebook_id],
         function (error, rows, fields) {
             if (error) {
                 return res.status(500).json({
@@ -115,7 +115,7 @@ app.post("/api/ebook/:ebook_id/checkout", isAuthenticatedJson, async function (r
     // user checks out a book -- requires authentication
     connection.query(
         "INSERT INTO borrow (user_id, ebook_id, due) VALUES (?, ?, NOW() + INTERVAL 21 DAY)",
-        [req.session.userId, req.query.ebook_id],
+        [req.session.userId, req.params.ebook_id],
         function(error, rows, fields) {
             if (error) {
                 return res.status(500).json({
@@ -162,7 +162,7 @@ app.post("/api/login", async function (req, res) {
     connection.query(
         "SELECT * FROM user WHERE username=?",
         [username],
-        function(error, rows, fields) {
+        async function(error, rows, fields) {
             if (error) {
                 return res.status(500).json({
                     success: false,
@@ -258,7 +258,7 @@ app.post("/api/user/ebook/:borrow_id/return", isAuthenticatedJson, async functio
     // return user borrowed ebook -- requires authentication
     connection.query(
         "DELETE FROM borrow WHERE user_id=? AND id=?",
-        [req.session.userId, req.query.borrow_id],
+        [req.session.userId, req.params.borrow_id],
         function(error, rows, fields) {
             if (error) {
                 return res.status(500).json({
