@@ -140,6 +140,11 @@ app.get("/login", async function (req, res) {
     var viewData = {}
     res.render("login", viewData)
 })
+app.get("/signup", async function (req, res) {
+    // signup page
+    var viewData = {}
+    res.render("signup", viewData)
+})
 app.post("/api/login", async function (req, res) {
     // login api call
     if (req.session.authenticated && req.session.username == req.body.username) {
@@ -212,6 +217,49 @@ app.post("/api/logout", isAuthenticatedJson, async function (req, res) {
     return res.status(200).json({
         success: true,
         message: "Successfully logged out."
+    })
+})
+app.post("/api/signup", function(req, res) {
+    // user signup
+    if (!req.body.username || !req.body.password) {
+        return res.status(400).json({
+            success: false,
+            message: "Username and password fields required."
+        })
+    }
+    let saltRounds = 10
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: "Unexpected server error.",
+                error: err
+            })
+        }
+
+        connection.query(
+            "INERT INTO user (username, password) VALUES (?, ?)",
+            [req.body.username, hash],
+            function(error, rows, fields) {
+                if (error) {
+                    return res.status(500).json({
+                        success: false,
+                        message: "Unexpected server error.",
+                        error: error
+                    })
+                }
+
+                return res.status(200).json({
+                    success: true,
+                    message: "Successfully signed up."
+                })
+
+                // newly signed up users automatically signed in
+                req.session.authenticated = true
+                req.session.username = req.body.username
+                req.session.userId = rows.insertId
+            }
+        )
     })
 })
 app.get("/user", async function (req, res) {
