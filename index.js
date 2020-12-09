@@ -216,13 +216,10 @@ app.post("/api/login", async function (req, res) {
         }
     )
 })
-app.post("/api/logout", isAuthenticatedJson, async function (req, res) {
+app.get("/logout", isAuthenticated, async function (req, res) {
     req.session.destroy()
 
-    return res.status(200).json({
-        success: true,
-        message: "Successfully logged out."
-    })
+    return res.redirect("/")
 })
 app.post("/api/signup", function(req, res) {
     // user signup
