@@ -14,7 +14,7 @@ app.set("view engine", "ejs");
 app.use(express.static("public"))
 app.use(expressLayouts)
 
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(session({
     secret: process.env.SECRET || 'top-secret',
     resave: true,
@@ -233,7 +233,7 @@ app.post("/api/signup", function(req, res) {
         })
     }
     let saltRounds = 10
-    bcrypt.hash(password, saltRounds, function(err, hash) {
+    bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
         if (err) {
             return res.status(500).json({
                 success: false,
@@ -254,15 +254,15 @@ app.post("/api/signup", function(req, res) {
                     })
                 }
 
-                return res.status(200).json({
-                    success: true,
-                    message: "Successfully signed up."
-                })
-
                 // newly signed up users automatically signed in
                 req.session.authenticated = true
                 req.session.username = req.body.username
                 req.session.userId = rows.insertId
+
+                return res.status(200).json({
+                    success: true,
+                    message: "Successfully signed up."
+                })
             }
         )
     })
