@@ -1,5 +1,10 @@
 FROM node:current-buster
 
+# for dumping mysql-migrations schema
+RUN apt-get update && apt-get install -y \
+    default-mysql-client \
+    ;
+
 WORKDIR /usr/app
 
 COPY package.json .
