@@ -13,7 +13,28 @@ $(document).ready(function() {
         .on("submit", function(event) {
             event.preventDefault()
 
-            var url = "/login"
-            // TODO:
+            var url = "/api/login"
+            var postData = {
+                username: $UsernameInput.val(),
+                password: $PasswordInput.val()
+            }
+
+            $.post(url, postData)
+            .then(
+                function(data, textStatus, jqXHR) {
+                    if (jqXHR.status == 200) {
+                        window.location.replace("/")
+                    } else {
+                        alert("We ran into a problem, please try again.")
+                    }
+                },
+                function(jqXHR, textStatus, errorThrown) {
+                    var msg = "We ran into a problem, please try again."
+                    if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                        msg = jqXHR.responseJSON.message
+                    }
+                    alert(msg)
+                }
+            )
         })
 })
