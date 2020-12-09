@@ -1,13 +1,19 @@
 $(document).ready(function () {
     var $UsernameInput = $("#username-input")
     var $PasswordInput = $("#password-input")
+    var $StateSelect = $("#state-select")
+    var $SubscribeCheckbox = $("#subscribe-checkbox")
     var $SubmitBtn = $("#submit-btn")
 
     $("#login-form")
         .on("input change", function (event) {
             $SubmitBtn.attr(
                 "disabled",
-                !($UsernameInput.val().length && $PasswordInput.val().length)
+                !(
+                    $UsernameInput.val().length
+                    && $PasswordInput.val().length
+                    && $StateSelect.val()
+                )
             )
         })
         .on("submit", function (event) {
@@ -16,7 +22,9 @@ $(document).ready(function () {
             var url = "/api/signup"
             var postData = {
                 username: $UsernameInput.val(),
-                password: $PasswordInput.val()
+                password: $PasswordInput.val(),
+                state: $StateSelect.val(),
+                subscribe: $SubscribeCheckbox.is(":checked") ? 1 : 0
             }
 
             $.post(url, postData)

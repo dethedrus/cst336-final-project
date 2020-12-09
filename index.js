@@ -223,10 +223,10 @@ app.get("/logout", isAuthenticated, async function (req, res) {
 })
 app.post("/api/signup", function(req, res) {
     // user signup
-    if (!req.body.username || !req.body.password) {
+    if (!req.body.username || !req.body.password || !req.body.state || !req.body.subscribe) {
         return res.status(400).json({
             success: false,
-            message: "Username and password fields required."
+            message: "Username, password, state, subscription fields required."
         })
     }
     let saltRounds = 10
@@ -240,8 +240,8 @@ app.post("/api/signup", function(req, res) {
         }
 
         connection.query(
-            "INSERT INTO user (username, password) VALUES (?, ?)",
-            [req.body.username, hash],
+            "INSERT INTO user (username, password, state, subscribed) VALUES (?, ?, ?, ?)",
+            [req.body.username, hash, req.body.state, req.body.subscribe],
             function(error, rows, fields) {
                 if (error) {
                     var msg = "Unexpected server error."
