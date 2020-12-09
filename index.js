@@ -244,9 +244,13 @@ app.post("/api/signup", function(req, res) {
             [req.body.username, hash],
             function(error, rows, fields) {
                 if (error) {
+                    var msg = "Unexpected server error."
+                    if (error.errno == 1062) {
+                        msg = "Username already exists."
+                    }
                     return res.status(500).json({
                         success: false,
-                        message: "Unexpected server error.",
+                        message: msg,
                         error: error
                     })
                 }
