@@ -20,6 +20,11 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
+// give views access to session vars
+app.use((req, res, next) => {
+    res.locals.session = req.session
+    next()
+})
 
 // middleware function
 function isAuthenticated(req, res, next) {
