@@ -238,7 +238,7 @@ app.post("/api/signup", function(req, res) {
         }
 
         connection.query(
-            "INERT INTO user (username, password) VALUES (?, ?)",
+            "INSERT INTO user (username, password) VALUES (?, ?)",
             [req.body.username, hash],
             function(error, rows, fields) {
                 if (error) {
