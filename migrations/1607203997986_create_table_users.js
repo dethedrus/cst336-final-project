@@ -1,7 +1,7 @@
 module.exports = {
     // password: 'secret'
     "up": `
-        INSERT INTO user (username, password)
+        INSERT INTO user (id, username, password)
         VALUES 
             (1, 'david', '$2a$10$06ofFgXJ9wysAOzQh0D0..RcDp1w/urY3qhO6VuUJL2c6tzAJPfj6'),
             (2, 'jose', '$2a$10$06ofFgXJ9wysAOzQh0D0..RcDp1w/urY3qhO6VuUJL2c6tzAJPfj6'),
