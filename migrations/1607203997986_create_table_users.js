@@ -3,11 +3,11 @@ module.exports = {
     "up": `
         INSERT INTO user (username, password)
         VALUES 
-            ('david', '$2a$10$06ofFgXJ9wysAOzQh0D0..RcDp1w/urY3qhO6VuUJL2c6tzAJPfj6'),
-            ('jose', '$2a$10$06ofFgXJ9wysAOzQh0D0..RcDp1w/urY3qhO6VuUJL2c6tzAJPfj6'),
-            ('jomar', '$2a$10$06ofFgXJ9wysAOzQh0D0..RcDp1w/urY3qhO6VuUJL2c6tzAJPfj6'),
-            ('yoela', '$2a$10$06ofFgXJ9wysAOzQh0D0..RcDp1w/urY3qhO6VuUJL2c6tzAJPfj6')
+            (1, 'david', '$2a$10$06ofFgXJ9wysAOzQh0D0..RcDp1w/urY3qhO6VuUJL2c6tzAJPfj6'),
+            (2, 'jose', '$2a$10$06ofFgXJ9wysAOzQh0D0..RcDp1w/urY3qhO6VuUJL2c6tzAJPfj6'),
+            (3, 'jomar', '$2a$10$06ofFgXJ9wysAOzQh0D0..RcDp1w/urY3qhO6VuUJL2c6tzAJPfj6'),
+            (4, 'yoela', '$2a$10$06ofFgXJ9wysAOzQh0D0..RcDp1w/urY3qhO6VuUJL2c6tzAJPfj6')
         ;
     `,
-    "down": "DELETE FROM user WHERE username='jose';"
+    "down": "DELETE FROM user WHERE id BETWEEN 1 AND 4;"
 }
