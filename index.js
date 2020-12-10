@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 // middleware function
 function isAuthenticated(req, res, next) {
     if (!req.session.authenticated) {
-        req.redirect("/")
+        return res.redirect("/")
     }
     next()
 }
@@ -154,7 +154,7 @@ app.post("/api/login", async function (req, res) {
     // login api call
     if (req.session.authenticated && req.session.username == req.body.username) {
         // already logged in
-        return res.status().json({
+        return res.status(200).json({
             success: true,
             message: "Successfully logged in.",
             data: {
@@ -268,17 +268,46 @@ app.post("/api/signup", function(req, res) {
         )
     })
 })
-app.get("/user", async function (req, res) {
+app.get("/user", isAuthenticated, async function (req, res) {
     // user management page; 
     var viewData = {}
     res.render("user-index", viewData)
 })
-app.get("/user/ebook", async function (req, res) {
+app.post("/api/user/username", isAuthenticated, function (req, res) {
+    let newUsername = req.body.username
+ 
+    connection.query(
+        "UPDATE user SET username = ? WHERE id = ?",
+        [newUsername, req.session.userId],
+        function (error, rows, fields) {
+            if (error) {
+                var msg = "Unexpected server error."
+                if (error.errno == 1062) {
+                    msg = "Username already exists."
+                }
+                return res.status(500).json({
+                    success: false,
+                    message: msg,
+                    error: error
+                })
+            }
+
+            // update username in session
+            req.session.username = newUsername
+
+            return res.status(200).json({
+                success: true,
+                message: "Successfully updated your username."
+            })
+        }
+    )
+})
+app.get("/user/ebook", isAuthenticated, async function (req, res) {
     // user borrowed ebooks index; show list of borrowed books 
     var viewData = {}
     res.render("user-ebook-index", viewData)
 })
-app.get("/user/ebook/:borrow_id", async function (req, res) {
+app.get("/user/ebook/:borrow_id", isAuthenticated, async function (req, res) {
     // user borrowed ebook; display ebook to user in browser
     var viewData = {}
     res.render("user-ebook-show", viewData)
