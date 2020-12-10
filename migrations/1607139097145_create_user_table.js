@@ -5,7 +5,7 @@ module.exports = {
             username VARCHAR(255) NOT NULL,
             password VARCHAR(255) NOT NULL,
             state VARCHAR(2) NOT NULL DEFAULT 'NA',
-            subscribed TINYINT(1),
+            subscribed TINYINT(1) DEFAULT '0',
             created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (id),
             UNIQUE(username)
