@@ -1,6 +1,6 @@
 module.exports = {
     "up": `
-        INSERT INTO borrow (user_id, ebook_id)
+        INSERT INTO borrow (id, user_id, ebook_id)
         VALUES 
             (1, 1, 1),
             (2, 2, 2),
