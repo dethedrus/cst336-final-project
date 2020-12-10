@@ -119,7 +119,7 @@ app.get("/api/ebook/:ebook_id", async function (req, res) {
 app.post("/api/ebook/:ebook_id/checkout", isAuthenticatedJson, async function (req, res) {
     // user checks out a book -- requires authentication
     connection.query(
-        "INSERT INTO borrow (user_id, ebook_id, due) VALUES (?, ?, NOW() + INTERVAL 21 DAY)",
+        "INSERT INTO borrow (user_id, ebook_id) VALUES (?, ?)",
         [req.session.userId, req.params.ebook_id],
         function(error, rows, fields) {
             if (error) {
