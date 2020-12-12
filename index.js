@@ -5,6 +5,8 @@ const app = express()
 const fetch = require("node-fetch")
 const bcrypt = require('bcrypt')
 const connection = require("./dbPool.js")
+const dotenv = require("dotenv")
+dotenv.config()
 
 const IP = process.env.IP || "0.0.0.0"
 const PORT = process.env.PORT || 5000
