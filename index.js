@@ -309,10 +309,36 @@ app.get("/user/ebook", isAuthenticated, async function (req, res) {
     var viewData = {}
     res.render("user-ebook-index", viewData)
 })
-app.get("/user/ebook/:borrow_id", isAuthenticated, async function (req, res) {
+app.get("/user/ebook/:borrow_id", isAuthenticated, function (req, res) {
     // user borrowed ebook; display ebook to user in browser
-    var viewData = {}
-    res.render("user-ebook-show", viewData)
+    var viewData = {
+        ebook: null
+    }
+
+    connection.query(
+        `SELECT
+            e.*
+        FROM ebook e
+            INNER JOIN borrow b ON e.id = b.ebook_id
+        WHERE
+            b.id = ?
+            AND b.user_id = ?
+        `,
+        [req.params.borrow_id, req.session.userId],
+        function(errors, rows, fields) {
+            if (errors) {
+                console.error(error)
+            }
+            if (rows.length == 1) {
+                let row = rows[0]
+                viewData.ebook = row
+                viewData.ebook_url = `/ebooks/${row.gutenberg_id}.epub`
+                viewData.ebook_cover_url = `/img/covers/${row.gutenberg_id}.jpg`
+            }
+
+            return res.render("user-ebook-show", viewData)
+        }
+    )
 })
 app.get("/api/user/ebook", isAuthenticatedJson, async function (req, res) {
     // list of user borrowed ebooks -- requires authentication
