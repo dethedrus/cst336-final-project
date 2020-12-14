@@ -86,6 +86,29 @@ app.get("/api/ebook", async function (req, res) {
         }
     )
 })
+app.get("/api/ebook/random", async function (req, res) {
+    // return a list of ebooks available
+    connection.query(
+        "SELECT * FROM ebook ORDER BY RAND LIMIT 5",
+        function (error, rows, fields) {
+            if (error) {
+                return res.status(500).json({
+                    success: false,
+                    message: "Unexpected server error.",
+                    error: error
+                })
+            }
+
+            return res.status(200).json({
+                success: true,
+                message: "Found random ebooks.",
+                data: {
+                    ebooks: rows
+                }
+            })
+        }
+    )
+})
 app.get("/api/ebook/:ebook_id", async function (req, res) {
     // return single ebook detail
     connection.query(
