@@ -1,0 +1,37 @@
+h2 {
+    font-family: 'Acme', sans-serif;
+    text-align: center;
+    color: #bd7427;
+}
+
+.event {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.eventListing {
+    font-size: 20px;
+}
+
+#mission {
+   text-align: center;
+   /*background-image: url("/img/background2.png");*/
+   width: 100%;
+   padding: 15px;
+}
+
+#footer {
+    text-align: center;
+}
+
+/*#navbarNav {*/
+/*    color: lightgrey;*/
+/*    width: 100%;*/
+/*}*/
+
+body {
+   background-image: url("/img/background3.png");
+   width: 100%;
+}
