@@ -1,7 +1,13 @@
+#libraryname {
+    font-family: 'Aclonica', sans-serif;
+    font-size: 25px;
+}
+
 h2 {
-    font-family: 'Acme', sans-serif;
+    font-family: 'Aclonica', sans-serif;
     text-align: center;
     color: #bd7427;
+    font-size: 30px;
 }
 
 .event {
@@ -9,6 +15,14 @@ h2 {
     justify-content: center;
     align-items: center;
     margin: auto;
+    
+}
+
+#eventbackground {
+    margin: auto;
+    /*background-color: #d9d9d966;*/
+    border-radius: 15px;
+    width: 700px;
 }
 
 .eventListing {
@@ -20,6 +34,7 @@ h2 {
    /*background-image: url("/img/background2.png");*/
    width: 100%;
    padding: 15px;
+   /*background-color: #d9d9d966;*/
 }
 
 #footer {
@@ -34,4 +49,45 @@ h2 {
 body {
    background-image: url("/img/background3.png");
    width: 100%;
+}
+
+.navbar {
+    background-image: linear-gradient(to right, #bd742780, #bd7427, #bd742780);
+    width: 100%;
+    height: 60px;
+    padding-right: 100px;
+    padding-left: 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/*.container {*/
+/*    width: 100%;*/
+/*    background-color: #bd742780;*/
+/*    height: 60px;*/
+/*}*/
+
+footer {
+    background-image: linear-gradient(to right, #bd742780, #bd7427, #bd742780);
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    
+}
+
+/*hr {*/
+/*    border-top: 2px solid black;*/
+/*}*/
+
+#promo {
+    width: 50%;
+}
+
+#across {
+    display: flex;
+}
+
+#rightside {
+    background-color: #d9d9d980;
+  
 }
