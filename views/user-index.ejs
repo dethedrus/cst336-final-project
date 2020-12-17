@@ -1,22 +1,22 @@
-<div class="row mb-4">
-    <div class="col">
-        <h1>Hello <%= locals.session.username %>!</h1>
-    </div>
-</div>
-<div class="row mb-4">
-    <div class="col">
-        <h2>Account management</h2>
+<br>
+<br>
+<div>
+    
+        <h2>ACCOUNT MANAGEMENT</h2>
+        <h3><em>Hello <%= locals.session.username %>!</em></h3>
+        <br>
         <hr>
         <h4>Update username:</h4>
-
-        <form id="username-form" class="form">
+        <br>
+        <form id="userInfo">
             <div class="form-group">
                 <label for="username-input">Username</label>
                 <input type="text" class="form-control" id="username-input" placeholder="Enter username">
               </div>
+              <br>
               <button id="submit-btn" type="submit" class="btn btn-primary" disabled="disabled">Submit</button>
         </form>
-    </div>
+    
 </div>
 
 <script src="/js/user-index.js"></script>
