@@ -1,0 +1,141 @@
+#libraryname {
+    font-family: 'Aclonica', sans-serif;
+    font-size: 25px;
+}
+
+h2 {
+    font-family: 'Aclonica', sans-serif;
+    text-align: center;
+    color: #bd7427;
+    font-size: 30px;
+}
+
+.event {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    
+}
+
+#eventbackground {
+    margin: auto;
+    border-radius: 15px;
+    width: 700px;
+}
+
+.eventListing {
+    font-size: 20px;
+}
+
+#mission {
+   text-align: center;
+   width: 100%;
+   padding: 15px;
+}
+
+/*#footer {*/
+/*    text-align: center;*/
+/*}*/
+
+#footer {
+    text-align: center;
+  /*position: absolute;*/
+  /*bottom: 0;*/
+  width: 100%;
+  
+  margin: auto;
+  padding-top: 15px;
+    
+}
+
+footer {
+    background-image: linear-gradient(to right, #bd742780, #bd7427, #bd742780);
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+   
+    
+}
+
+body {
+   background-image: url("/img/background3.png");
+   width: 100%;
+}
+
+.navbar {
+    background-image: linear-gradient(to right, #bd742780, #bd7427, #bd742780);
+    width: 100%;
+    height: 60px;
+    padding-right: 100px;
+    padding-left: 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+
+
+#promo {
+    width: 50%;
+}
+
+#across {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#rightside {
+    background-color: #d9d9d980;
+    width: 100%;
+  
+}
+
+#toppicks {
+    display: flex;
+    justify-content: space-around;
+}
+
+/*.row {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    margin: auto;*/
+/*}*/
+
+/*.col {*/
+/*    margin: auto;*/
+/*    padding-left: 30px;*/
+/*    padding-right: 30px;*/
+/*}*/
+
+#signup {
+    background-color: #d9d9d980;
+    border-radius: 12px;
+    width: 300px;
+    height: 200px;
+    margin: auto;
+   
+}
+
+#logincontainer {
+    /*display: flex;*/
+    /*justify-content: space-around;*/
+    margin: auto;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+#username-input #password-input {
+    width: 50%
+}
+
+#login-form {
+    margin: auto;
+    text-align: center;
+}
+
+#login-form {
+    width: 20%;
+}

@@ -1,5 +1,10 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">Free Ebook Lib</a>
+<div class="containter">
+<nav class="navbar navbar-expand-lg navbar-light">
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-light">-->
+    <img id="bookicon" src="/img/7638.png"/>
+    
+    <a id="libraryname" class="navbar-brand" href="/">&nbsp &nbsp FREE E-BOOK LIBRARY</a>
+    
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -7,7 +12,10 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <a class="nav-link" href="/ebook">Ebooks</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/search">Search</a>
       </ul>
+      
       <ul class="navbar-nav">
         <% if (!locals.session.authenticated) { %>
           <li class="nav-item">
@@ -24,3 +32,4 @@
       </ul>
     </div>
   </nav>
+  </div>

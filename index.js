@@ -58,6 +58,11 @@ app.get("/ebook", async function (req, res) {
     var viewData = {}
     res.render("ebook-index", viewData)
 })
+app.get("/search", async function (req, res) {
+    // ebook index page; browse books
+    var viewData = {}
+    res.render("search", viewData)
+})
 app.get("/ebook/:ebook_id", async function (req, res) {
     // ebook page; show detail for single ebook
     var viewData = {}

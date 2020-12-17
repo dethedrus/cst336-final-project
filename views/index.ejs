@@ -1,10 +1,75 @@
-<div class="row">
-    <div class="col">
-        <div class="jumbotron">
-            <div class="container">
-              <h1 class="display-4">Free E-Book Library</h1>
-              <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+
+<script>
+    $(document).ready(async function() {
+                
+                //Global variables
+                var book;
+                
+                let url = `/api/ebook`;
+                let response = await fetch(url);
+                let data = await response.json();
+                console.log(data);
+                
+                
+                
+                for (let x=0; x<5; x++) {
+                    book = data.data.ebooks[x];
+                console.log(book);
+                        $("#toppicks").append(`<img src="/img/covers/${book.gutenberg_id}.jpg">`);
+                    }
+    })
+</script>
+<!--<div class="row">-->
+<!--    <div class="col">-->
+        <!--<div class="jumbotron">-->
+            <div id="mission">
+              <!--<img src="/img/Library-Logo-Transparent.png"/>-->
+<br>
+              <h4><em>OUR MISSION</em></h4>
+                <p> <em>The Free Ebook Library aims to promote inclusiveness and celebrate diversity by providing free access <br>to books and 
+                resources to any individual for educational and recreational purposes.</em></p>
+               
             </div>
-          </div>
-    </div>
+          <!--</div>-->
+<!--    </div>-->
+<!--</div>-->
+<div id="across">
+<div id="rightside">
+<br><br>
+<h2>UPCOMING EVENTS</h2><br>
+<div id="eventbackground">
+<div class="event">
+<img src="/img/Jan8.png" alt="January 8" />
+<div>
+<p class="eventListing">Virtual Storybook Read-Aloud with Author Kevin Henkes
+<br>
+<strong>10:00 am</strong>
+<br>
+<em>Children ages 3-9</em></p>
 </div>
+</div>
+<div class="event">
+<img src="/img/Jan17.png" alt="January 17" />
+<div>
+<p class="eventListing">Live Interview with Community Activist Roger Newcomb
+<br>
+<strong>7:00 pm</strong>
+<br>
+<em>Teens and Adults</em></p>
+</div>
+</div>
+<br>
+</div>
+</div>
+
+<img id="promo" src="/img/promophoto1.jpg"/>   
+
+</div>
+<br><br>
+<h2>CHECK OUT THIS WEEK'S TOP PICKS!</h2>
+<br>
+<div id="toppicks">
+
+</div>
+<br><br><br><br>
+
