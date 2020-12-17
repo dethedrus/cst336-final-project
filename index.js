@@ -332,11 +332,13 @@ app.post("/api/user/username", isAuthenticated, function (req, res) {
         }
     )
 })
+
 app.get("/user/ebook", isAuthenticated, async function (req, res) {
     // user borrowed ebooks index; show list of borrowed books 
     var viewData = {}
     res.render("user-ebook-index", viewData)
 })
+
 app.get("/user/ebook/:borrow_id", isAuthenticated, function (req, res) {
     // user borrowed ebook; display ebook to user in browser
     var viewData = {
