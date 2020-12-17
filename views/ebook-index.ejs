@@ -1,0 +1,31 @@
+<style>
+    .bookCovers a
+    {
+        position:relative;
+        text-decoration: none;
+    }
+    .bookCovers a span
+    {
+        position:absolute;
+        display:none;
+        z-index:99;
+    }
+    .bookCovers a:hover span
+    {
+        top: -5px;
+        left: 115%;
+        padding: 15px;
+        background-color: white;
+        display:block;
+        overflow: visible;
+    }
+</style>
+<hr>
+<table class  = "bookCovers" style = "width : 100%">
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+    </tr>
+</table>
+<hr>
+<script src = js/populateBooks.js></script>

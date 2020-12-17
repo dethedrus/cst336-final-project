@@ -89,7 +89,7 @@ app.get("/api/ebook", async function (req, res) {
 app.get("/api/ebook/random", async function (req, res) {
     // return a list of ebooks available
     connection.query(
-        "SELECT * FROM ebook ORDER BY RAND LIMIT 5",
+        "SELECT * FROM ebook ORDER BY RAND() LIMIT 5",
         function (error, rows, fields) {
             if (error) {
                 return res.status(500).json({
@@ -327,11 +327,13 @@ app.post("/api/user/username", isAuthenticated, function (req, res) {
         }
     )
 })
+
 app.get("/user/ebook", isAuthenticated, async function (req, res) {
     // user borrowed ebooks index; show list of borrowed books 
     var viewData = {}
     res.render("user-ebook-index", viewData)
 })
+
 app.get("/user/ebook/:borrow_id", isAuthenticated, function (req, res) {
     // user borrowed ebook; display ebook to user in browser
     var viewData = {
