@@ -2,13 +2,15 @@
 
 <div class="row">
     <div class="col">
+        <br><br>
         <h2><%= locals.ebook.title %></h2>
+        <br>
     </div>
     <div class="col" style="display: none;">
         <img src="<%= locals.ebook_cover_url %>" alt="<%= locals.ebook.title %>">
     </div>
 </div>
-<hr>
+
 <div class="row">
     <div class="col">
         <div id="view"></div>
@@ -16,7 +18,7 @@
         <a id="next" href="#next" class="arrow" style="visibility: visible;">›</a>
     </div>
 </div>
-<hr>
+<br><br><br>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.5.0/dist/jszip.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
 <script>

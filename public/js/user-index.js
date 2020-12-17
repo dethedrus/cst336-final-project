@@ -45,7 +45,7 @@ $(document).ready(function () {
     if (books.length == 0){
         $("#borrowedBooks").append("<h3>You don't have any borrowed books!</h3>");
     }else {
-        $("#borrowedBooks").append("<h3>Click on a book-cover to view the book!</h3>");
+        $("#borrowTitle").append("<h3>Click on a book cover to view the book!<br><br></h3>");
         for(let i = 0; i < books.length; i++){
             htmlString += "<div class='card' style='width: 12rem;'><a href='/user/ebook/" + books[i].borrow_id + "'><img src='/img/covers/" + books[i].cover_filename 
             + "' class='card-img-top' alt='Cover of " 
