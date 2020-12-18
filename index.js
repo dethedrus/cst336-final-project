@@ -164,7 +164,7 @@ app.post("/api/ebook/:ebook_id/checkout", isAuthenticatedJson, async function (r
                 success: true,
                 message: "Successfully checked out ebook.",
                 data: {
-                    borrow_id: rows[0].id
+                    borrow_id: rows.insertId
                 }
             })
         }

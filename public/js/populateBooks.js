@@ -26,13 +26,20 @@ $(document).ready(async function()
     {
         let response = await fetch(url, {method: "post"});
         let data = await response.json();
-        if (data.success != true)
+        if (data.success.toString() == "false")
         {
-            alert(data.message);
+            if (data.message.indexOf("authenticated") != -1)
+            {
+                alert("You must be logged in to check out books");
+            }
+            else
+            {
+                alert("You have already checked out this book!"); 
+            }
         }
         else
         {
-            alert(data.message);
+            alert("You have successfully checked out a book!");
         }
     }
 })
