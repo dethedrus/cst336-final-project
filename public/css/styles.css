@@ -143,3 +143,24 @@ body {
 h4, h3 {
     text-align: center;
 }
+
+.bookCovers a
+{
+    position:relative;
+    text-decoration: none;
+}
+.bookCovers a span
+{
+    position:absolute;
+    display:none;
+    z-index:99;
+}
+.bookCovers a:hover span
+{
+    top: -5px;
+    left: 115%;
+    padding: 15px;
+    background-color: white;
+    display:block;
+    overflow: visible;
+}
