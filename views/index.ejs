@@ -5,7 +5,7 @@
                 //Global variables
                 var book;
                 
-                let url = `/api/ebook`;
+                let url = `/api/ebook/random`;
                 let response = await fetch(url);
                 let data = await response.json();
                 console.log(data);
