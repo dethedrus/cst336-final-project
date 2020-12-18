@@ -7,30 +7,22 @@
         let url = `/api/ebook/random`;
         let response = await fetch(url);
         let data = await response.json();
-        console.log(data);
-
-
 
         for (let x = 0; x < 5; x++) {
             book = data.data.ebooks[x];
-            console.log(book);
             $("#toppicks").append(`<img src="/img/covers/${book.gutenberg_id}.jpg">`);
         }
     })
 </script>
 <div class="row">
     <div class="col">
-        <!--<div class="jumbotron">-->
         <div id="mission">
-            <!--<img src="/img/Library-Logo-Transparent.png"/>-->
-            <br>
             <h4><em>OUR MISSION</em></h4>
             <p> <em>The Free Ebook Library aims to promote inclusiveness and celebrate diversity by providing free
                     access <br>to books and
                     resources to any individual for educational and recreational purposes.</em></p>
 
         </div>
-        <!--</div>-->
     </div>
 </div>
 
